@@ -18,5 +18,13 @@
     <ClCompile Include="FirstProject.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Aeroplane.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Aeroplane.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
