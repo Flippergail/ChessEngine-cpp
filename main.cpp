@@ -1,5 +1,5 @@
-#include <chrono>
-#include <thread>
+//#include <chrono>
+//#include <thread>
 
 /*
 code for waiting
@@ -9,7 +9,7 @@ std::this_thread::sleep_for(dura);
 
 
 #include <iostream>
-#include "board.h"
+#include "Board.h"
 
 using namespace std;
 

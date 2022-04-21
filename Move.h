@@ -39,9 +39,3 @@ public:
 	bool was_promoted{ false };
 	short int promoted_from;
 };
-
-//typedef struct {
-//	Coord from;
-//	Coord to;
-//
-//} Move;
