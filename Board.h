@@ -28,8 +28,8 @@ public:
     ~Board();
 
     //Setters
-    void undo_move();
-    bool make_move(Move& player_move, bool check_for_pin = true);
+    void pop_move();
+    bool push_move(Move& player_move, bool check_for_pin = true);
 
     std::vector<PastMove> past_moves;
     void find_moves(bool check_for_pin = true);
