@@ -19,7 +19,10 @@ public:
 	Coord from;
 	Coord to;
 
-	Piece* piece_taken{nullptr};
+	Piece* piece_taken;
+
+	bool is_promotion;
+	bool is_castle;
 
 	bool operator==(const Move& rhs) const {
 		return from.x == rhs.from.x && from.y == rhs.from.y
@@ -36,6 +39,7 @@ public:
 
 	Piece* piece_taken{nullptr};
 
-	bool was_promoted{ false };
+	bool was_promoted;
+	bool was_castle;
 	short int promoted_from;
 };
