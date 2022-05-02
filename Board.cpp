@@ -13,18 +13,16 @@ Board::Board() {
 
     for (short int i = 0; i < 2; i++)
     {
-        //Piece r1(r, i); Piece n1(n, i); Piece b1(b, i); Piece q1(q, i); Piece k1(k, i); Piece b2(b, i); Piece n2(n, i); Piece r2(r, i);
         short int p_y{ i * 7 };
-        //board[0][p_y] = &r1; board[1][p_y] = &n1; board[2][p_y] = &b1; board[3][p_y] = &q1; board[4][p_y] = &k1; board[5][p_y] = &b2; board[6][p_y] = &n2; board[7][p_y] = &r2;
         Coord init_piece_coord{ 0, p_y };
-       // board[0][p_y].piece = new Piece(r, i, init_piece_coord);
-       // init_piece_coord.x += 1;
-       // board[1][p_y].piece = new Piece(n, i, init_piece_coord);
-       // init_piece_coord.x += 1;
-       // board[2][p_y].piece = new Piece(b, i, init_piece_coord);
-       // init_piece_coord.x += 1;
-      //  board[3][p_y].piece = new Piece(q, i, init_piece_coord);
-     //   init_piece_coord.x += 1;
+        board[0][p_y].piece = new Piece(r, i, init_piece_coord);
+        init_piece_coord.x += 1;
+        board[1][p_y].piece = new Piece(n, i, init_piece_coord);
+        init_piece_coord.x += 1;
+        board[2][p_y].piece = new Piece(b, i, init_piece_coord);
+        init_piece_coord.x += 1;
+        board[3][p_y].piece = new Piece(q, i, init_piece_coord);
+        init_piece_coord.x += 1;
         board[4][p_y].piece = new Piece(k, i, init_piece_coord);
         init_piece_coord.x += 1;
         board[5][p_y].piece = new Piece(b, i, init_piece_coord);
