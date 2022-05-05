@@ -1,5 +1,6 @@
 #include "Piece.h"
 #include <iostream>
+#include "Board.h"
 
 Piece::Piece(const short int piece_type_param, const short int owner_param, Coord& coord_param)
 {

@@ -35,16 +35,16 @@ public:
     void pop_move(bool check_moves = true);
     bool push_move(Move& player_move, bool check_for_pin = true);
 
+    void add_move(Coord& move_to, Coord& piece_c, short int player_move_multiplier, bool check_for_pin = true, Piece* piece_taken = nullptr, bool is_castle = false);
     void find_moves(bool check_for_pin = true);
 
     short int game_state{ playing_state };
 
-private:
-    void add_move(Coord& move_to, Coord& piece_c, short int player_move_multiplier, bool check_for_pin = true, Piece* piece_taken = nullptr, bool is_castle = false);
-    bool is_move_legal(Move& check_move);
-    bool in_check();
-
     std::vector<PastMove> past_moves{};
     std::vector<Move> possible_moves{};
     std::vector<Move> pin_moves{};
+
+private:
+    bool is_move_legal(Move& check_move);
+    bool in_check();
 };
