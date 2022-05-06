@@ -1,5 +1,6 @@
 #include "Board.h"
 #include "Pawn.h"
+#include "Bishop.h"
 
 Board::Board() {
 
@@ -20,13 +21,13 @@ Board::Board() {
         init_piece_coord.x += 1;
         board[1][p_y].piece = new Piece(n, i, init_piece_coord);
         init_piece_coord.x += 1;
-        board[2][p_y].piece = new Piece(b, i, init_piece_coord);
+        board[2][p_y].piece = new Bishop(b, i, init_piece_coord);
         init_piece_coord.x += 1;
         board[3][p_y].piece = new Piece(q, i, init_piece_coord);
         init_piece_coord.x += 1;
         board[4][p_y].piece = new Piece(k, i, init_piece_coord);
         init_piece_coord.x += 1;
-        board[5][p_y].piece = new Piece(b, i, init_piece_coord);
+        board[5][p_y].piece = new Bishop(b, i, init_piece_coord);
         init_piece_coord.x += 1;
         board[6][p_y].piece = new Piece(n, i, init_piece_coord);
         init_piece_coord.x += 1;

@@ -1,9 +1,7 @@
 #include "Bishop.h"
-#include <iostream>
 
 void Bishop::add_moves(Board& board, short int player_move_multiplier, bool check_for_pin, BoardCell& board_cell)
 {
-    std::cout << "hit" << std::endl;
     Coord piece_c = this->piece_coord;
     short int check_x{};
     short int check_y{};
