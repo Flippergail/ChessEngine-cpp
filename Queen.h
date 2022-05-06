@@ -8,4 +8,3 @@ public:
 
 	void add_moves(Board& board, short int player_move_multiplier, bool check_for_pin, BoardCell& board_cell);
 };
-

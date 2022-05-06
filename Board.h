@@ -37,6 +37,7 @@ public:
 
     void add_move(Coord& move_to, Coord& piece_c, short int player_move_multiplier, bool check_for_pin = true, Piece* piece_taken = nullptr, bool is_castle = false);
     void find_moves(bool check_for_pin = true);
+    bool is_move_legal(Move& check_move);
 
     short int game_state{ playing_state };
 
@@ -45,6 +46,5 @@ public:
     std::vector<Move> pin_moves{};
 
 private:
-    bool is_move_legal(Move& check_move);
     bool in_check();
 };

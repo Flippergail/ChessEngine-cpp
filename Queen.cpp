@@ -1,5 +1,4 @@
 #include "Queen.h"
-#include <iostream>
 
 
 void Queen::add_moves(Board& board, short int player_move_multiplier, bool check_for_pin, BoardCell& board_cell) {
@@ -7,7 +6,6 @@ void Queen::add_moves(Board& board, short int player_move_multiplier, bool check
     short int check_x = piece_c.x;
     short int check_y = piece_c.y + player_move_multiplier;
     BoardCell* check_cell{ nullptr };
-    std::cout << "hit" << std::endl;
 
     // checks to the top of the queen for possible moves
     for (short int i = 0; i < board_size; i++)
