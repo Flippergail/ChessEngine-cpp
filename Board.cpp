@@ -5,6 +5,7 @@
 #include "Bishop.h"
 #include "Knight.h"
 #include "Rook.h"
+#include "Queen.h"
 
 Board::Board() {
 
@@ -27,7 +28,7 @@ Board::Board() {
         init_piece_coord.x += 1;
         board[2][p_y].piece = new Bishop(b, i, init_piece_coord);
         init_piece_coord.x += 1;
-        board[3][p_y].piece = new Piece(q, i, init_piece_coord);
+        board[3][p_y].piece = new Queen(q, i, init_piece_coord);
         init_piece_coord.x += 1;
         board[4][p_y].piece = new Piece(k, i, init_piece_coord);
         init_piece_coord.x += 1;
@@ -240,7 +241,6 @@ void Board::find_moves(bool check_for_pin /* = true*/) {
                     board_cell.piece->add_moves(*this, player_move_multiplier, check_for_pin, board_cell);
                     break;
 
-
                 case n:
                     board_cell.piece->add_moves(*this, player_move_multiplier, check_for_pin, board_cell);
                     break;
@@ -249,133 +249,7 @@ void Board::find_moves(bool check_for_pin /* = true*/) {
                     board_cell.piece->add_moves(*this, player_move_multiplier, check_for_pin, board_cell);
                     break;
                 case q:
-                    // checks to the top of the queen for possible moves
-                    for (short int i = 0; i < board_size; i++)
-                    {
-                        check_x = piece_c.x;
-                        check_y = piece_c.y + i;
-                        if (check_x > -1 && check_x < board_size && check_y > -1 && check_y < board_size) {
-                            check_cell = &board[check_x][check_y];
-                            if (check_cell->piece == nullptr || check_cell->piece != nullptr && check_cell->piece->owner != board_cell.piece->owner) {
-                                Coord move_to{ check_x, check_y };
-                                add_move(move_to, piece_c, player_move_multiplier, check_for_pin);
-                                if (check_cell->piece != nullptr) { break; }
-                            }
-                        }
-                        else { break; }
-                    }
-
-                    // checks to the bottom of the queen for possible moves
-                    for (short int i = 0; i < board_size; i++)
-                    {
-                        check_x = piece_c.x;
-                        check_y = piece_c.y - i;
-                        if (check_x > -1 && check_x < board_size && check_y > -1 && check_y < board_size) {
-                            check_cell = &board[check_x][check_y];
-                            if (check_cell->piece == nullptr || check_cell->piece != nullptr && check_cell->piece->owner != board_cell.piece->owner) {
-                                Coord move_to{ check_x, check_y };
-                                add_move(move_to, piece_c, player_move_multiplier, check_for_pin);
-                                if (check_cell->piece != nullptr) { break; }
-                            }
-                        }
-                        else { break; }
-                    }
-
-                    // checks to the left of the queen for possible moves
-                    for (short int i = 0; i < board_size; i++)
-                    {
-                        check_x = piece_c.x - i;
-                        check_y = piece_c.y;
-                        if (check_x > -1 && check_x < board_size && check_y > -1 && check_y < board_size) {
-                            check_cell = &board[check_x][check_y];
-                            if (check_cell->piece == nullptr || check_cell->piece != nullptr && check_cell->piece->owner != board_cell.piece->owner) {
-                                Coord move_to{ check_x, check_y };
-                                add_move(move_to, piece_c, player_move_multiplier, check_for_pin);
-                                if (check_cell->piece != nullptr) { break; }
-                            }
-                        }
-                        else { break; }
-                    }
-
-                    // checks to the right of the queen for possible moves
-                    for (short int i = 0; i < board_size; i++)
-                    {
-                        check_x = piece_c.x + i;
-                        check_y = piece_c.y;
-                        if (check_x > -1 && check_x < board_size && check_y > -1 && check_y < board_size) {
-                            check_cell = &board[check_x][check_y];
-                            if (check_cell->piece == nullptr || check_cell->piece != nullptr && check_cell->piece->owner != board_cell.piece->owner) {
-                                Coord move_to{ check_x, check_y };
-                                add_move(move_to, piece_c, player_move_multiplier, check_for_pin);
-                                if (check_cell->piece != nullptr) { break; }
-                            }
-                        }
-                        else { break; }
-                    }
-
-                    // checks to the top right of the queen for possible moves
-                    for (short int i = 0; i < board_size; i++)
-                    {
-                        check_x = piece_c.x + i;
-                        check_y = piece_c.y + i;
-                        if (check_x > -1 && check_x < board_size && check_y > -1 && check_y < board_size) {
-                            check_cell = &board[check_x][check_y];
-                            if (check_cell->piece == nullptr || check_cell->piece != nullptr && check_cell->piece->owner != board_cell.piece->owner) {
-                                Coord move_to{ check_x, check_y };
-                                add_move(move_to, piece_c, player_move_multiplier, check_for_pin);
-                                if (check_cell->piece != nullptr) { break; }
-                            }
-                        }
-                        else { break; }
-                    }
-
-                    // checks to the top left of the queen for possible moves
-                    for (short int i = 0; i < board_size; i++)
-                    {
-                        check_x = piece_c.x - i;
-                        check_y = piece_c.y + i;
-                        if (check_x > -1 && check_x < board_size && check_y > -1 && check_y < board_size) {
-                            check_cell = &board[check_x][check_y];
-                            if (check_cell->piece == nullptr || check_cell->piece != nullptr && check_cell->piece->owner != board_cell.piece->owner) {
-                                Coord move_to{ check_x, check_y };
-                                add_move(move_to, piece_c, player_move_multiplier, check_for_pin);
-                                if (check_cell->piece != nullptr) { break; }
-                            }
-                        }
-                        else { break; }
-                    }
-
-                    // checks to the bottom right of the queen for possible moves
-                    for (short int i = 0; i < board_size; i++)
-                    {
-                        check_x = piece_c.x + i;
-                        check_y = piece_c.y - i;
-                        if (check_x > -1 && check_x < board_size && check_y > -1 && check_y < board_size) {
-                            check_cell = &board[check_x][check_y];
-                            if (check_cell->piece == nullptr || check_cell->piece != nullptr && check_cell->piece->owner != board_cell.piece->owner) {
-                                Coord move_to{ check_x, check_y };
-                                add_move(move_to, piece_c, player_move_multiplier, check_for_pin);
-                                if (check_cell->piece != nullptr) { break; }
-                            }
-                        }
-                        else { break; }
-                    }
-
-                    // checks to the bottom left of the queen for possible moves
-                    for (short int i = 0; i < board_size; i++)
-                    {
-                        check_x = piece_c.x - i;
-                        check_y = piece_c.y - i;
-                        if (check_x > -1 && check_x < board_size && check_y > -1 && check_y < board_size) {
-                            check_cell = &board[check_x][check_y];
-                            if (check_cell->piece == nullptr || check_cell->piece != nullptr && check_cell->piece->owner != board_cell.piece->owner) {
-                                Coord move_to{ check_x, check_y };
-                                add_move(move_to, piece_c, player_move_multiplier, check_for_pin);
-                                if (check_cell->piece != nullptr) { break; }
-                            }
-                        }
-                        else { break; }
-                    }
+                    board_cell.piece->add_moves(*this, player_move_multiplier, check_for_pin, board_cell);
                     break;
                 case k:
                     // checks to the top of the king for possible moves

@@ -1,14 +1,14 @@
 #include "Pawn.h"
 
 
-
 void Pawn::add_moves(Board& board, short int player_move_multiplier, bool check_for_pin, BoardCell& board_cell)
 {
-    // move forward one place
+    BoardCell* check_cell{ nullptr };
     Coord piece_c = this->piece_coord;
+
+    // move forward one place
     short int check_x = piece_c.x;
     short int check_y = piece_c.y + player_move_multiplier;
-    BoardCell* check_cell{ nullptr };
     if (check_x > -1 && check_x < board_size && check_y > -1 && check_y < board_size) {
         check_cell = &board.board[check_x][check_y];
         if (board.board[piece_c.x][piece_c.y + player_move_multiplier].piece == nullptr) {
