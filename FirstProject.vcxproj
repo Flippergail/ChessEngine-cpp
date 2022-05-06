@@ -20,17 +20,21 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Bishop.cpp" />
+    <ClCompile Include="Knight.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Board.cpp" />
     <ClCompile Include="Pawn.cpp" />
     <ClCompile Include="Piece.cpp" />
+    <ClCompile Include="Rook.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Bishop.h" />
     <ClInclude Include="Board.h" />
+    <ClInclude Include="Knight.h" />
     <ClInclude Include="Move.h" />
     <ClInclude Include="Pawn.h" />
     <ClInclude Include="Piece.h" />
+    <ClInclude Include="Rook.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
