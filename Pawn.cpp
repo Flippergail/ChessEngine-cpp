@@ -13,7 +13,18 @@ void Pawn::add_moves(Board& board, short int player_move_multiplier, bool check_
         check_cell = &board.board[check_x][check_y];
         if (board.board[piece_c.x][piece_c.y + player_move_multiplier].piece == nullptr) {
             Coord move_to{ piece_c.x, piece_c.y + player_move_multiplier };
-            board.add_move(move_to, piece_c, player_move_multiplier, check_for_pin);
+            
+            // checks if the pawn can promote
+            if (move_to.y == (board.move_number + 1) % 2 * 7) {
+                // adds possible promotions of pawn
+                board.add_move(move_to, piece_c, player_move_multiplier, check_for_pin, 0, b);
+                board.add_move(move_to, piece_c, player_move_multiplier, check_for_pin, 0, n);
+                board.add_move(move_to, piece_c, player_move_multiplier, check_for_pin, 0, r);
+                board.add_move(move_to, piece_c, player_move_multiplier, check_for_pin, 0, q);
+            }
+            else {
+                board.add_move(move_to, piece_c, player_move_multiplier, check_for_pin);
+            }
         }
     }
 
@@ -38,7 +49,18 @@ void Pawn::add_moves(Board& board, short int player_move_multiplier, bool check_
         check_cell = &board.board[check_x][check_y];
         if (check_cell->piece != nullptr && check_cell->piece->owner != board_cell.piece->owner) {
             Coord move_to{ piece_c.x + 1, piece_c.y + player_move_multiplier };
-            board.add_move(move_to, piece_c, player_move_multiplier, check_for_pin);
+
+            // checks if the pawn can promote
+            if (move_to.y == (board.move_number + 1) % 2 * 7) {
+                // adds possible promotions of pawn
+                board.add_move(move_to, piece_c, player_move_multiplier, check_for_pin, 0, b);
+                board.add_move(move_to, piece_c, player_move_multiplier, check_for_pin, 0, n);
+                board.add_move(move_to, piece_c, player_move_multiplier, check_for_pin, 0, r);
+                board.add_move(move_to, piece_c, player_move_multiplier, check_for_pin, 0, q);
+            }
+            else {
+                board.add_move(move_to, piece_c, player_move_multiplier, check_for_pin);
+            }
         }
     }
 
@@ -49,7 +71,18 @@ void Pawn::add_moves(Board& board, short int player_move_multiplier, bool check_
         check_cell = &board.board[check_x][check_y];
         if (check_cell->piece != nullptr && check_cell->piece->owner != board_cell.piece->owner) {
             Coord move_to{ piece_c.x - 1, piece_c.y + player_move_multiplier };
-            board.add_move(move_to, piece_c, player_move_multiplier, check_for_pin);
+
+            // checks if the pawn can promote
+            if (move_to.y == (board.move_number + 1) % 2 * 7) {
+                // adds possible promotions of pawn
+                board.add_move(move_to, piece_c, player_move_multiplier, check_for_pin, 0, b);
+                board.add_move(move_to, piece_c, player_move_multiplier, check_for_pin, 0, n);
+                board.add_move(move_to, piece_c, player_move_multiplier, check_for_pin, 0, r);
+                board.add_move(move_to, piece_c, player_move_multiplier, check_for_pin, 0, q);
+            }
+            else {
+                board.add_move(move_to, piece_c, player_move_multiplier, check_for_pin);
+            }
         }
     }
 

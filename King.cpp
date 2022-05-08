@@ -95,9 +95,9 @@ void King::add_moves(Board& board, short int player_move_multiplier, bool check_
         }
 
     }
-
-    if (check_for_pin) {
-
+    ++board.move_number;
+    if (check_for_pin and board.in_check()) {
+        --board.move_number;
         // for castling
         bool king_moved{ false };
         for (auto& past_move : board.past_moves) {
@@ -133,7 +133,7 @@ void King::add_moves(Board& board, short int player_move_multiplier, bool check_
                     if (board.is_move_legal(possible_move)) {
                         ++move_to.x;
                         possible_move.to = move_to;
-                        board.add_move(move_to, piece_c, player_move_multiplier, true, nullptr, true);
+                        board.add_move(move_to, piece_c, player_move_multiplier, true, 0, true);
                     }
                 }
             }
@@ -147,11 +147,14 @@ void King::add_moves(Board& board, short int player_move_multiplier, bool check_
                     if (board.is_move_legal(possible_move)) {
                         --move_to.x;
                         possible_move.to = move_to;
-                        board.add_move(move_to, piece_c, player_move_multiplier, true, nullptr, true);
+                        board.add_move(move_to, piece_c, player_move_multiplier, true, 0, true);
                     }
                 }
             }
 
         }
+    }
+    else {
+        --board.move_number;
     }
 }

@@ -19,6 +19,7 @@ void Queen::add_moves(Board& board, short int player_move_multiplier, bool check
                 board.add_move(move_to, piece_c, player_move_multiplier, check_for_pin);
                 if (check_cell->piece != nullptr) { break; }
             }
+            else { break; }
         }
         else { break; }
     }
@@ -35,6 +36,7 @@ void Queen::add_moves(Board& board, short int player_move_multiplier, bool check
                 board.add_move(move_to, piece_c, player_move_multiplier, check_for_pin);
                 if (check_cell->piece != nullptr) { break; }
             }
+            else { break; }
         }
         else { break; }
     }
@@ -51,6 +53,7 @@ void Queen::add_moves(Board& board, short int player_move_multiplier, bool check
                 board.add_move(move_to, piece_c, player_move_multiplier, check_for_pin);
                 if (check_cell->piece != nullptr) { break; }
             }
+            else { break; }
         }
         else { break; }
     }
@@ -67,6 +70,7 @@ void Queen::add_moves(Board& board, short int player_move_multiplier, bool check
                 board.add_move(move_to, piece_c, player_move_multiplier, check_for_pin);
                 if (check_cell->piece != nullptr) { break; }
             }
+            else { break; }
         }
         else { break; }
     }
@@ -83,6 +87,7 @@ void Queen::add_moves(Board& board, short int player_move_multiplier, bool check
                 board.add_move(move_to, piece_c, player_move_multiplier, check_for_pin);
                 if (check_cell->piece != nullptr) { break; }
             }
+            else { break; }
         }
         else { break; }
     }
@@ -99,6 +104,7 @@ void Queen::add_moves(Board& board, short int player_move_multiplier, bool check
                 board.add_move(move_to, piece_c, player_move_multiplier, check_for_pin);
                 if (check_cell->piece != nullptr) { break; }
             }
+            else { break; }
         }
         else { break; }
     }
@@ -115,6 +121,7 @@ void Queen::add_moves(Board& board, short int player_move_multiplier, bool check
                 board.add_move(move_to, piece_c, player_move_multiplier, check_for_pin);
                 if (check_cell->piece != nullptr) { break; }
             }
+            else { break; }
         }
         else { break; }
     }
@@ -131,6 +138,7 @@ void Queen::add_moves(Board& board, short int player_move_multiplier, bool check
                 board.add_move(move_to, piece_c, player_move_multiplier, check_for_pin);
                 if (check_cell->piece != nullptr) { break; }
             }
+            else { break; }
         }
         else { break; }
     }
