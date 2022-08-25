@@ -10,7 +10,7 @@ std::this_thread::sleep_for(dura);
 
 #include <iostream>
 #include <string>
-#include "Board.h"
+#include "Board/Board.h"
 
 using namespace std;
 
@@ -68,7 +68,7 @@ void player_push_move(Board* board) {
     if (is_legal) {
         std::cout << *board << endl;
         
-/*       for (auto &value : board->possible_moves) {
+       /*for (auto& value : board->possible_moves) {
             std::cout << "[" << value.from.x << ", " << value.from.y<< "]" << endl;    
             std::cout << "[" << value.to.x << ", " << value.to.y<< "]" << endl;
             std::cout << "==========" << endl << endl;

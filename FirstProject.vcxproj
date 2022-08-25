@@ -19,26 +19,28 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Bishop.cpp" />
-    <ClCompile Include="King.cpp" />
-    <ClCompile Include="Knight.cpp" />
+    <ClCompile Include="Board\Bishop.cpp" />
+    <ClCompile Include="Board\Board.cpp" />
+    <ClCompile Include="Board\King.cpp" />
+    <ClCompile Include="Board\Knight.cpp" />
+    <ClCompile Include="Board\Pawn.cpp" />
+    <ClCompile Include="Board\Piece.cpp" />
+    <ClCompile Include="Board\Queen.cpp" />
+    <ClCompile Include="Board\Rook.cpp" />
+    <ClCompile Include="Engine\Engine.cpp" />
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="Board.cpp" />
-    <ClCompile Include="Pawn.cpp" />
-    <ClCompile Include="Piece.cpp" />
-    <ClCompile Include="Queen.cpp" />
-    <ClCompile Include="Rook.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Bishop.h" />
-    <ClInclude Include="Board.h" />
-    <ClInclude Include="King.h" />
-    <ClInclude Include="Knight.h" />
-    <ClInclude Include="Move.h" />
-    <ClInclude Include="Pawn.h" />
-    <ClInclude Include="Piece.h" />
-    <ClInclude Include="Queen.h" />
-    <ClInclude Include="Rook.h" />
+    <ClInclude Include="Board\Bishop.h" />
+    <ClInclude Include="Board\Board.h" />
+    <ClInclude Include="Board\King.h" />
+    <ClInclude Include="Board\Knight.h" />
+    <ClInclude Include="Board\Move.h" />
+    <ClInclude Include="Board\Pawn.h" />
+    <ClInclude Include="Board\Piece.h" />
+    <ClInclude Include="Board\Queen.h" />
+    <ClInclude Include="Board\Rook.h" />
+    <ClInclude Include="Engine\Engine.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
