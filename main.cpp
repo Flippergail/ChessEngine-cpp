@@ -1,11 +1,6 @@
 //#include <chrono>
 //#include <thread>
 
-/*
-code for waiting
-std::chrono::seconds dura(5);
-std::this_thread::sleep_for(dura);
-*/
 
 
 #include <iostream>
@@ -67,12 +62,6 @@ void player_push_move(Board* board) {
     bool is_legal = board->push_move(my_move);
     if (is_legal) {
         std::cout << *board << endl;
-        
-       /*for (auto& value : board->possible_moves) {
-            std::cout << "[" << value.from.x << ", " << value.from.y<< "]" << endl;    
-            std::cout << "[" << value.to.x << ", " << value.to.y<< "]" << endl;
-            std::cout << "==========" << endl << endl;
-        }*/
     }
     else {
         std::cout << " move invalid " << endl;
@@ -89,12 +78,6 @@ int main() {
     {
         player_push_move(board);
     }
-
-    //for (auto &value : board->possible_moves) {
-    //    std::cout << "[" << value.from.x << ", " << value.from.y<< "]" << endl;    
-    //    std::cout << "[" << value.to.x << ", " << value.to.y<< "]" << endl;
-    //    std::cout << "==========" << endl << endl;
-    //}
 
     return 0;
 }
