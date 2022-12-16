@@ -1,7 +1,8 @@
 # Chess-Engine-cpp
 
 ### A Good Example of Class Structures
-This chess program is a great example of how to code more complex class structures with inheritance and polymorphism in c++.
+This chess program is a great example of how to code more complex class structures with inheritance and polymorphism in c++
+which can be used to help your learning of c++.
 
 ### How to use:
 Make moves in the format which square you want to move a piece from to the square you want to move it to e.g "a2a4" would move
