@@ -5,27 +5,31 @@
 
 #include <iostream>
 #include <string>
+
 #include "Board/Board.h"
+#include "Engine/Engine.h"
 
 using namespace std;
 
 
 void player_push_move(Board* board) {
-    short int coord_from_x;
-    short int coord_from_y;
+    cout << *board << endl;
+
+    int coord_from_x;
+    int coord_from_y;
 
 
-    short int coord_to_x;
-    short int coord_to_y;
+    int coord_to_x;
+    int coord_to_y;
 
-    std::string typed_move;
-    //cin >> typed_move;
+    string typed_move;
+    cout << "Please enter your move : ";
     getline(cin, typed_move);
 
     if (typed_move == "-1") {
         // undo last move
         board->pop_move();
-        std::cout << *board << endl;
+        cout << *board << endl;
         player_push_move(board);
         return;
     }
@@ -33,7 +37,7 @@ void player_push_move(Board* board) {
     coord_from_x = static_cast<int>(typed_move[0]) - 97;
     coord_from_y = static_cast<int>(typed_move[1])-48-1;
 
-    coord_to_x = static_cast<short int>(typed_move[2]) - 97;
+    coord_to_x = static_cast<int>(typed_move[2]) - 97;
     coord_to_y = static_cast<int>(typed_move[3])-48-1;
 
 
@@ -61,22 +65,69 @@ void player_push_move(Board* board) {
 
     bool is_legal = board->push_move(my_move);
     if (is_legal) {
-        std::cout << *board << endl;
+        cout << *board << endl;
     }
     else {
-        std::cout << " move invalid " << endl;
+        cout << " move invalid " << endl;
         player_push_move(board);
     }
 }
 
+bool check_game_state(Board* board) {
+    if (board->game_state == 1) {
+        cout << "Black has won!" << endl;
+    }
+    else if (board->game_state == 0) {
+        cout << "White has won!" << endl;
+    }
+    else if (board->game_state == -1) {
+        cout << "It is a draw!" << endl;
+    }
+
+    if (board->game_state != 2) { return false; }
+    else { return true; }
+}
+
 
 int main() {
-    Board* board = new Board;
-    std::cout << *board << endl;
+    string playerColour;
+    cout << "Would you like to play white, black or random? w/b/r : ";
+    getline(cin, playerColour);
 
-    while (true)
+
+    if (playerColour == "r") {
+        srand(time(0));
+        int randomint = rand() % 1;
+        if (randomint == 1) { playerColour = "w"; cout << "You are playing as White." << endl; }
+        else { playerColour = "b"; cout << "You are playing as Black." << endl;
+        }
+    }
+
+    Board* board = new Board;
+
+    Engine* engine = new Engine;
+    bool game_playing{ true };
+
+    while (game_playing)
     {
-        player_push_move(board);
+        if (playerColour == "w") {
+            player_push_move(board);
+
+            game_playing = check_game_state(board);
+            if (!game_playing) { break; }
+
+            engine->make_move(*board);
+            game_playing = check_game_state(board);
+        }
+        else {
+            engine->make_move(*board);
+
+            game_playing = check_game_state(board);
+            if (!game_playing) { break; }
+
+            player_push_move(board);
+            game_playing = check_game_state(board);
+        }
     }
 
     return 0;

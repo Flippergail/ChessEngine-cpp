@@ -2,14 +2,14 @@
 
 
 
-void Rook::add_moves(Board& board, short int player_move_multiplier, bool check_for_pin, BoardCell& board_cell) {
+void Rook::add_moves(Board& board, int player_move_multiplier, bool check_for_pin, BoardCell& board_cell) {
     Coord piece_c = this->piece_coord;
-    short int check_x = piece_c.x;
-    short int check_y = piece_c.y + player_move_multiplier;
+    int check_x = piece_c.x;
+    int check_y = piece_c.y + player_move_multiplier;
     BoardCell* check_cell{ nullptr };
 
     // checks to the top of the rook for possible moves
-    for (short int i = 1; i < board_size + 1; i++)
+    for (int i = 1; i < board_size + 1; i++)
     {
         check_x = piece_c.x;
         check_y = piece_c.y + i;
@@ -26,7 +26,7 @@ void Rook::add_moves(Board& board, short int player_move_multiplier, bool check_
     }
 
     // checks to the bottom of the rook for possible moves
-    for (short int i = 1; i < board_size + 1; i++)
+    for (int i = 1; i < board_size + 1; i++)
     {
         check_x = piece_c.x;
         check_y = piece_c.y - i;
@@ -43,7 +43,7 @@ void Rook::add_moves(Board& board, short int player_move_multiplier, bool check_
     }
 
     // checks to the left of the rook for possible moves
-    for (short int i = 1; i < board_size + 1; i++)
+    for (int i = 1; i < board_size + 1; i++)
     {
         check_x = piece_c.x - i;
         check_y = piece_c.y;
@@ -60,7 +60,7 @@ void Rook::add_moves(Board& board, short int player_move_multiplier, bool check_
     }
 
     // checks to the right of the rook for possible moves
-    for (short int i = 1; i < board_size + 1; i++)
+    for (int i = 1; i < board_size + 1; i++)
     {
         check_x = piece_c.x + i;
         check_y = piece_c.y;

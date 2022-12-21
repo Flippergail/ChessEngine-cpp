@@ -1,10 +1,10 @@
 #include "King.h"
 
 
-void King::add_moves(Board& board, short int player_move_multiplier, bool check_for_pin, BoardCell& board_cell) {
+void King::add_moves(Board& board, int player_move_multiplier, bool check_for_pin, BoardCell& board_cell) {
     Coord piece_c = this->piece_coord;
-    short int check_x = piece_c.x;
-    short int check_y = piece_c.y + player_move_multiplier;
+    int check_x = piece_c.x;
+    int check_y = piece_c.y + player_move_multiplier;
 
     BoardCell* check_cell{ nullptr };
     // checks to the top of the king for possible moves

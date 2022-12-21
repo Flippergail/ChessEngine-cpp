@@ -1,12 +1,12 @@
 #pragma once
 class Piece;
 
-const short int board_size{ 8 };
+const int board_size{ 8 };
 
 class Coord {
 public:
-	short int x;
-	short int y; 
+	int x;
+	int y; 
 	
 	bool operator==(const Coord& rhs) const {
 		return x == rhs.x && y == rhs.y;
@@ -21,7 +21,7 @@ public:
 
 	Piece* piece_taken;
 
-	short int promotion_to{};
+	int promotion_to{};
 	bool is_castle;
 
 	bool operator==(const Move& rhs) const {
@@ -37,10 +37,10 @@ public:
 	Coord from;
 	Coord to;
 
-	short int piece_taken;
+	int piece_taken;
 	Coord piece_taken_coord;
 
-	short int promoted_to;
+	int promoted_to;
 	bool was_castle;
-	short int promoted_from;
+	int promoted_from;
 };

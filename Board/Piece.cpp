@@ -2,7 +2,7 @@
 #include <iostream>
 #include "Board.h"
 
-Piece::Piece(const short int piece_type_param, const short int owner_param, Coord& coord_param)
+Piece::Piece(const int piece_type_param, const int owner_param, Coord& coord_param)
 {
 	owner = owner_param;
 	piece_type = piece_type_param;
