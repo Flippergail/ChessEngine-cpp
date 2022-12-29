@@ -1,8 +1,3 @@
-//#include <chrono>
-//#include <thread>
-
-
-
 #include <iostream>
 #include <string>
 
@@ -90,45 +85,78 @@ bool check_game_state(Board* board) {
 
 
 int main() {
-    string playerColour;
-    cout << "Would you like to play white, black or random? w/b/r : ";
-    getline(cin, playerColour);
+    string matchFormat;
+    cout << "Would you like to play the engine or watch a game of the engine vs engine (type 1 or 2) : ";
+    getline(cin, matchFormat);
+
+    if (matchFormat == "1") {
+        string playerColour;
+        cout << "Would you like to play white, black or random? w/b/r : ";
+        getline(cin, playerColour);
+
+        Board* board = new Board;
+        Engine* engine = new Engine;
 
 
-    if (playerColour == "r") {
-        srand(time(0));
-        int randomint = rand() % 1;
-        if (randomint == 1) { playerColour = "w"; cout << "You are playing as White." << endl; }
-        else { playerColour = "b"; cout << "You are playing as Black." << endl;
+        if (playerColour == "r") {
+            srand(time(0));
+            int randomint = rand() % 1;
+            if (randomint == 1) {
+                playerColour = "w"; cout << "You are playing as White." << endl;
+                engine->engineColour = 1;
+            }
+            else {
+                playerColour = "b"; cout << "You are playing as Black." << endl;
+                engine->engineColour = 0;
+            }
+        }
+        bool game_playing{ true };
+
+        while (game_playing)
+        {
+            if (playerColour == "w") {
+                player_push_move(board);
+
+                game_playing = check_game_state(board);
+                if (!game_playing) { break; }
+
+                engine->make_move(*board);
+                game_playing = check_game_state(board);
+            }
+            else {
+                engine->make_move(*board);
+
+                game_playing = check_game_state(board);
+                if (!game_playing) { break; }
+
+                player_push_move(board);
+                game_playing = check_game_state(board);
+            }
         }
     }
+    else {
+        Board* board = new Board;
 
-    Board* board = new Board;
+        Engine* engine_white = new Engine;
+        engine_white->engineColour = 0;
+        Engine* engine_black = new Engine;
+        engine_black->engineColour = 1;
 
-    Engine* engine = new Engine;
-    bool game_playing{ true };
-
-    while (game_playing)
-    {
-        if (playerColour == "w") {
-            player_push_move(board);
+        bool game_playing{ true };
+        while (game_playing) {
+            engine_white->make_move(*board);
+            cout << *board << endl;
 
             game_playing = check_game_state(board);
             if (!game_playing) { break; }
 
-            engine->make_move(*board);
-            game_playing = check_game_state(board);
-        }
-        else {
-            engine->make_move(*board);
+            engine_black->make_move(*board);
+            cout << *board << endl;
 
-            game_playing = check_game_state(board);
-            if (!game_playing) { break; }
-
-            player_push_move(board);
             game_playing = check_game_state(board);
         }
     }
+    
 
     return 0;
 }

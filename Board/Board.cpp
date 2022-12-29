@@ -12,6 +12,9 @@
 #include "Queen.h"
 #include "King.h"
 
+template <class Rep, class Period>
+void sleep_for(const std::chrono::duration<Rep, Period>& rel_time);
+
 Board::Board()
 {
 
@@ -61,6 +64,7 @@ Board::Board()
     }
 
     this->find_moves();
+    past_possible_moves.push_back(possible_moves);
 }
 
 void Board::new_piece(BoardCell &board_cell, int piece_type, int piece_owner)
@@ -94,7 +98,7 @@ void Board::pop_move(bool check_moves /* = true*/)
     if (last_move.promoted_to != 0)
     {
         board_cell->piece->~Piece();
-        this->new_piece(*board_cell, last_move.promoted_from, (move_number - 1) % 2);
+        this->new_piece(*board_cell, last_move.promoted_from, last_move.piece_owner);
     }
 
     board_cell->piece->piece_coord = last_move.from;
@@ -104,7 +108,7 @@ void Board::pop_move(bool check_moves /* = true*/)
     // untakes a piece if it was taken last move
     if (last_move.piece_taken != 0)
     {
-        this->new_piece(board[last_move.piece_taken_coord.x][last_move.piece_taken_coord.y], last_move.piece_taken, move_number % 2);
+        this->new_piece(board[last_move.piece_taken_coord.x][last_move.piece_taken_coord.y], last_move.piece_taken, last_move.piece_taken_owner);
     }
     else
     {
@@ -137,7 +141,8 @@ void Board::pop_move(bool check_moves /* = true*/)
 
     if (check_moves)
     {
-        this->find_moves();
+        past_possible_moves.erase(past_possible_moves.end() - 1);
+        possible_moves = past_possible_moves.back();
     }
 }
 
@@ -164,11 +169,12 @@ bool Board::push_move(Move &player_move, bool check_for_pin /* = true */)
         return false;
     }
 
-    PastMove past_move{game_move.from, game_move.to, {}, {}, game_move.promotion_to, game_move.is_castle, board[game_move.from.x][game_move.from.y].piece->piece_type};
+    PastMove past_move{ game_move.from, game_move.to, {}, {}, {}, board[game_move.from.x][game_move.from.y].piece->owner, game_move.promotion_to, game_move.is_castle, board[game_move.from.x][game_move.from.y].piece->piece_type };
     if (board[game_move.to.x][game_move.to.y].piece != nullptr)
     {
         past_move.piece_taken = board[game_move.to.x][game_move.to.y].piece->piece_type;
         past_move.piece_taken_coord = game_move.to;
+        past_move.piece_taken_owner = board[game_move.to.x][game_move.to.y].piece->owner;
 
         board[game_move.to.x][game_move.to.y].piece->~Piece();
     }
@@ -178,6 +184,7 @@ bool Board::push_move(Move &player_move, bool check_for_pin /* = true */)
     {
         past_move.piece_taken = game_move.piece_taken->piece_type;
         past_move.piece_taken_coord = game_move.piece_taken->piece_coord;
+        past_move.piece_taken_owner = game_move.piece_taken->owner;
 
         board[game_move.piece_taken->piece_coord.x][game_move.piece_taken->piece_coord.y].piece->~Piece();
         board[game_move.piece_taken->piece_coord.x][game_move.piece_taken->piece_coord.y].piece = nullptr;
@@ -217,19 +224,27 @@ bool Board::push_move(Move &player_move, bool check_for_pin /* = true */)
 
     ++move_number;
     this->find_moves(check_for_pin);
+    if (check_for_pin) {
+        past_possible_moves.push_back(possible_moves);
+    }
 
     return true;
 }
 
-bool Board::is_move_legal(Move &check_move)
+bool* Board::is_move_legal(Move &check_move)
 {
 
     // checks if there is a check after the piece has moved
     this->push_move(check_move, false);
     bool move_is_legal{!this->in_check()};
+    ++move_number;
+    bool move_causes_check{ this->in_check() };
+    --move_number;
     this->pop_move(false);
 
-    return move_is_legal;
+    bool move_info[2]{ move_is_legal, move_causes_check };
+
+    return move_info;
 }
 
 bool Board::in_check()
@@ -240,7 +255,7 @@ bool Board::in_check()
     Coord king_coord{};
     for (int y = 0; y < board_size; ++y)
     {
-        for (int x = 0; x < board_size; x++)
+        for (int x = 0; x < board_size; ++x)
         {
             BoardCell &board_cell{board[x][y]};
             if (board_cell.piece != nullptr && board_cell.piece->piece_type == k && board_cell.piece->owner == (move_number - 1) % 2)
@@ -269,8 +284,10 @@ void Board::add_move(Coord &move_to, Coord &piece_c, int player_move_multiplier,
 
     if (check_for_pin)
     {
-        if (this->is_move_legal(possible_move))
+        bool* move_info = this->is_move_legal(possible_move);
+        if (move_info[0])
         {
+            possible_move.causes_check = move_info[1];
             possible_moves.push_back(possible_move);
         }
     }
@@ -345,28 +362,30 @@ void Board::find_moves(bool check_for_pin /* = true*/)
             }
         }
     }
-
+    
     // checks if the game is over
-    if (size(possible_moves) == 0 && move_number > 1 && check_for_pin == true)
+    if (move_number > 1 && check_for_pin == true)
     {
         ++move_number;
-        if (in_check())
-        {
-            // checkmate
-            game_state = move_number % 2;
-            //std::cout << game_state << " has won by checkmate" << std::endl;
-        }
-        else
-        {
-            // draw
-            game_state = draw;
+        currently_in_check = in_check();
+        if (size(possible_moves) == 0) {
+            if (currently_in_check)
+            {
+                // checkmate
+                game_state = move_number % 2;
+            }
+            else
+            {
+                // draw
+                game_state = draw;
+            }
         }
         --move_number;
     }
 
     // insufficient material draw
 
-    // gets all the pieces on the board
+    // gets all the pieces on the board (could be replaced by a system of adding/removing on capture/promote)
     this->white_pieces.clear();
     this->black_pieces.clear();
 
@@ -389,55 +408,55 @@ void Board::find_moves(bool check_for_pin /* = true*/)
         }
     }
 
-    // checks for insufficient material scenarios
-    if (this->white_pieces.size() <= 3 || this->black_pieces.size() <= 3)
-    {
-        if (this->are_only_pieces(0, 0) /* (k, k) */)
-        {
-            game_state = draw;
-        }
-        else if (this->are_only_pieces(b, b))
-        {
-            game_state = draw;
-        }
-        else if (this->are_only_pieces(q, q))
-        {
-            game_state = draw;
-        }
-        else if (this->are_only_pieces(r, r))
-        {
-            game_state = draw;
-        }
-        else if (this->are_only_pieces(b, 0))
-        {
-            game_state = draw;
-        }
-        else if (this->are_only_pieces(0, b))
-        {
-            game_state = draw;
-        }
+    //// checks for insufficient material scenarios
+    //if (this->white_pieces.size() <= 3 || this->black_pieces.size() <= 3)
+    //{
+    //    if (this->are_only_pieces(0, 0) /* (k, k) */)
+    //    {
+    //        game_state = draw;
+    //    }
+    //    else if (this->are_only_pieces(b, b))
+    //    {
+    //        game_state = draw;
+    //    }
+    //    else if (this->are_only_pieces(q, q))
+    //    {
+    //        game_state = draw;
+    //    }
+    //    else if (this->are_only_pieces(r, r))
+    //    {
+    //        game_state = draw;
+    //    }
+    //    else if (this->are_only_pieces(b, 0))
+    //    {
+    //        game_state = draw;
+    //    }
+    //    else if (this->are_only_pieces(0, b))
+    //    {
+    //        game_state = draw;
+    //    }
 
-        // checks for two knights draw
-        bool only_knights = true;
-        for (int white_piece : this->white_pieces)
-        {
-            if (white_piece != n and white_piece != k)
-            {
-                only_knights = false;
-            }
-        }
-        for (int black_piece : this->black_pieces)
-        {
-            if (black_piece != n and black_piece != k)
-            {
-                only_knights = false;
-            }
-        }
-        if (only_knights)
-        {
-            game_state = draw;
-        }
-    }
+    //    // checks for two knights draw
+    //    bool only_knights = true;
+    //    for (int white_piece : this->white_pieces)
+    //    {
+    //        if (white_piece != n and white_piece != k)
+    //        {
+    //            only_knights = false;
+    //        }
+    //    }
+    //    for (int black_piece : this->black_pieces)
+    //    {
+    //        if (black_piece != n and black_piece != k)
+    //        {
+    //            only_knights = false;
+    //        }
+    //    }
+    //    if (only_knights)
+    //    {
+    //        game_state = draw;
+    //    }
+    //}
 }
 
 char whiteUpperCase(char input, int owner)

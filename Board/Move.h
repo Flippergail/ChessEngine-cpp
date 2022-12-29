@@ -24,6 +24,8 @@ public:
 	int promotion_to{};
 	bool is_castle;
 
+	bool causes_check{ false };
+
 	bool operator==(const Move& rhs) const {
 		return from.x == rhs.from.x && from.y == rhs.from.y
 			&& to.x == rhs.to.x && to.y == rhs.to.y && promotion_to == rhs.promotion_to;
@@ -39,7 +41,9 @@ public:
 
 	int piece_taken;
 	Coord piece_taken_coord;
+	int piece_taken_owner;
 
+	int piece_owner;
 	int promoted_to;
 	bool was_castle;
 	int promoted_from;

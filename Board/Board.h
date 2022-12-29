@@ -2,6 +2,9 @@
 
 #include <iostream>
 #include <vector>
+#include <chrono>
+#include <thread>
+
 #include "Piece.h"
 #include "Move.h"
 
@@ -24,7 +27,7 @@ class Board
 public:
     unsigned int move_number{ 0 };
 
-    BoardCell board[8][8];
+    BoardCell board[8][8]; 
 
     Board();
     ~Board();
@@ -35,16 +38,18 @@ public:
     void add_move(Coord& move_to, Coord& piece_c, int player_move_multiplier, bool check_for_pin = true, Piece* piece_taken = nullptr, int promotion_to = 0, bool is_castle = false);
     void find_moves(bool check_for_pin = true);
 
-    bool is_move_legal(Move& check_move);
+    bool* is_move_legal(Move& check_move);
     bool in_check();
 
     int game_state{ playing_state };
+    bool currently_in_check{ false };
 
     int pushes{};
     int pops{};
 
     std::vector<PastMove> past_moves{};
     std::vector<Move> possible_moves;
+    std::vector<std::vector<Move>> past_possible_moves{};
     std::vector<Move> pin_moves;
 
     std::vector<int> white_pieces;
