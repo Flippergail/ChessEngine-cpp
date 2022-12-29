@@ -24,6 +24,7 @@ void player_push_move(Board* board) {
     if (typed_move == "-1") {
         // undo last move
         board->pop_move();
+        board->pop_move();
         cout << *board << endl;
         player_push_move(board);
         return;
