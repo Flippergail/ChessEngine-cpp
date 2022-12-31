@@ -9,8 +9,3 @@ Piece::Piece(const int piece_type_param, const int owner_param, Coord& coord_par
 	piece_coord = coord_param;
 
 }
-
-Piece::~Piece()
-{
-	//std::cout << piece_type << " deconstructed, owner : " << owner << std::endl;
-}

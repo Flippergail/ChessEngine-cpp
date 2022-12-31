@@ -95,9 +95,10 @@ void Board::pop_move(bool check_moves /* = true*/)
     BoardCell *board_cell = &board[last_move.to.x][last_move.to.y];
 
     // unpromotes the piece if it was promoted
-    if (last_move.promoted_to != 0)
+     if (last_move.promoted_to != 0)
     {
-        board_cell->piece->~Piece();
+        //board_cell->piece->~Piece();
+        delete board_cell->piece;
         this->new_piece(*board_cell, last_move.promoted_from, last_move.piece_owner);
     }
 
@@ -170,24 +171,17 @@ bool Board::push_move(Move &player_move, bool check_for_pin /* = true */)
     }
 
     PastMove past_move{ game_move.from, game_move.to, {}, {}, {}, board[game_move.from.x][game_move.from.y].piece->owner, game_move.promotion_to, game_move.is_castle, board[game_move.from.x][game_move.from.y].piece->piece_type };
-    if (board[game_move.to.x][game_move.to.y].piece != nullptr)
+
+    // deletes the piece taken (primary purpose for en passant as the position of the piece you take and position you move to are different)
+    if (game_move.is_piece_taken)
     {
-        past_move.piece_taken = board[game_move.to.x][game_move.to.y].piece->piece_type;
-        past_move.piece_taken_coord = game_move.to;
-        past_move.piece_taken_owner = board[game_move.to.x][game_move.to.y].piece->owner;
+        past_move.piece_taken = board[game_move.piece_taken.x][game_move.piece_taken.y].piece->piece_type;
+        past_move.piece_taken_coord = game_move.piece_taken;
+        past_move.piece_taken_owner = board[game_move.piece_taken.x][game_move.piece_taken.y].piece->owner;
 
-        board[game_move.to.x][game_move.to.y].piece->~Piece();
-    }
-
-    // removes the piece taken off the board (primary purpose for en passant as the position of the piece you take and position you move to are different)
-    if (game_move.piece_taken != nullptr)
-    {
-        past_move.piece_taken = game_move.piece_taken->piece_type;
-        past_move.piece_taken_coord = game_move.piece_taken->piece_coord;
-        past_move.piece_taken_owner = game_move.piece_taken->owner;
-
-        board[game_move.piece_taken->piece_coord.x][game_move.piece_taken->piece_coord.y].piece->~Piece();
-        board[game_move.piece_taken->piece_coord.x][game_move.piece_taken->piece_coord.y].piece = nullptr;
+        delete board[game_move.piece_taken.x][game_move.piece_taken.y].piece;
+        // board[game_move.piece_taken->piece_coord.x][game_move.piece_taken->piece_coord.y].piece->~Piece();
+        board[game_move.piece_taken.x][game_move.piece_taken.y].piece = nullptr;
     }
 
     board[game_move.to.x][game_move.to.y].piece = board[game_move.from.x][game_move.from.y].piece;
@@ -198,7 +192,8 @@ bool Board::push_move(Move &player_move, bool check_for_pin /* = true */)
 
     if (player_move.promotion_to != 0)
     {
-        board[game_move.to.x][game_move.to.y].piece->~Piece();
+        //board[game_move.to.x][game_move.to.y].piece->~Piece();
+        delete board[game_move.to.x][game_move.to.y].piece;
         this->new_piece(board[game_move.to.x][game_move.to.y], player_move.promotion_to, move_number % 2);
     }
 
@@ -231,20 +226,19 @@ bool Board::push_move(Move &player_move, bool check_for_pin /* = true */)
     return true;
 }
 
-bool* Board::is_move_legal(Move &check_move)
+Legal_And_Check_Struct Board::is_move_legal(Move &check_move)
 {
+    Legal_And_Check_Struct legal_and_check{};
 
     // checks if there is a check after the piece has moved
     this->push_move(check_move, false);
-    bool move_is_legal{!this->in_check()};
+    legal_and_check.is_legal = !this->in_check();
     ++move_number;
-    bool move_causes_check{ this->in_check() };
+    legal_and_check.causes_check = this->in_check();
     --move_number;
     this->pop_move(false);
 
-    bool move_info[2]{ move_is_legal, move_causes_check };
-
-    return move_info;
+    return legal_and_check;
 }
 
 bool Board::in_check()
@@ -277,17 +271,16 @@ bool Board::in_check()
     return is_check;
 }
 
-void Board::add_move(Coord &move_to, Coord &piece_c, int player_move_multiplier, bool check_for_pin, Piece *piece_taken /* = nullptr*/, int promotion_to /* = 0*/, bool is_castle /* = false*/)
+void Board::add_move(Coord &move_to, Coord &piece_c, Coord piece_taken, int player_move_multiplier, bool is_taking_piece, bool check_for_pin /* = false*/, int promotion_to /* = 0*/, bool is_castle /* = false*/)
 {
-
-    Move possible_move{piece_c, move_to, piece_taken, promotion_to, is_castle};
+    Move possible_move{piece_c, move_to, piece_taken, is_taking_piece, promotion_to, is_castle};
 
     if (check_for_pin)
     {
-        bool* move_info = this->is_move_legal(possible_move);
-        if (move_info[0])
+        Legal_And_Check_Struct move_info = this->is_move_legal(possible_move);
+        if (move_info.is_legal)
         {
-            possible_move.causes_check = move_info[1];
+            possible_move.causes_check = move_info.causes_check;
             possible_moves.push_back(possible_move);
         }
     }
@@ -344,7 +337,6 @@ void Board::find_moves(bool check_for_pin /* = true*/)
         player_move_multiplier = -1;
     }
 
-    BoardCell *check_cell{nullptr};
 
     int check_x{};
     int check_y{};
@@ -517,6 +509,21 @@ std::ostream &operator<<(std::ostream &out, const Board &board_class)
         out << std::endl;
     }
     return out;
+}
+
+void Board::print_metrics()
+{
+    std::cout << "========================" << std::endl
+        << std::endl;
+    std::cout << "Board metrics" << std::endl;
+    std::cout << "past_moves " << past_moves.size() << std::endl;
+    std::cout << "possible_moves " << possible_moves.size() << std::endl;
+    std::cout << "past_possible_moves " << past_possible_moves.size() << std::endl;
+    std::cout << "pin_moves " << pin_moves.size() << std::endl;
+    std::cout << "white_pieces " << white_pieces.size() << std::endl;
+    std::cout << "white_pieces " << white_pieces.size() << std::endl;
+    std::cout << "========================" << std::endl
+        << std::endl;
 }
 
 Board::~Board()

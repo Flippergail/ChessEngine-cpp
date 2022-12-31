@@ -4,7 +4,7 @@ void Engine::make_move(Board& board) {
 	auto start = high_resolution_clock::now();
 
 	Move bestMove{};
-	int bestValue{ -999999 };
+	int bestValue{ -9999999 };
 
 	int alpha{ -999999 };
 	int beta{ 999999 };
@@ -18,9 +18,6 @@ void Engine::make_move(Board& board) {
 	if (board.move_number > 1) {
 		last_move = board.past_moves.end()[-2];
 	}
-	//if (board.move_number > 3) {
-	//	move_before_last = board.past_moves.end()[-4];
-	//}
 
 	if (possible_moves.size() > 1) {
 		for (auto &move : possible_moves) {
@@ -70,12 +67,15 @@ void Engine::make_move(Board& board) {
  		std::cout << board << std::endl;
 	}
 	auto stop = high_resolution_clock::now();
+
 	auto duration = duration_cast<seconds>(stop - start);
 	std::cout << "engine move duration : " << duration.count() << " seconds" << std::endl;
 	std::cout << "move made value : " << bestValue << std::endl;
 	std::cout << "tree leaves: " << tree_leaves << std::endl;
 	std::cout << "total branches: " << total_branches << std::endl;
 	std::cout << "updated move number : " << board.move_number << std::endl;
+
+	//board.print_metrics();
 
 	tree_leaves = 0;
 	total_branches = 0;
@@ -87,8 +87,9 @@ int Engine::negamax(Board& board, int alpha, int beta, int treeDepthLeft) {
 	bool is_legal;
 	int score;
 
-	std::vector<Move> possible_moves = board.possible_moves;
-	for (auto &move : possible_moves) {
+
+	std::vector<Move> current_possible_moves = board.possible_moves;
+	for (auto &move : current_possible_moves) {
 		total_branches += 1;
 		is_legal = board.push_move(move);
 		if (!is_legal) {
@@ -131,7 +132,7 @@ int Engine::quiescence(Board& board, int alpha, int beta, int treeDepthLeft) {
 
 	std::vector<Move> possible_moves = board.possible_moves;
 	for (auto &move : possible_moves) {
-		if (move.piece_taken != 0 || move.causes_check || board.currently_in_check) {
+		if (move.is_piece_taken || move.causes_check || board.currently_in_check) {
 			total_branches += 1;
 			is_legal = board.push_move(move);
 			if (!is_legal) {

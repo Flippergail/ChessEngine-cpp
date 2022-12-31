@@ -11,6 +11,9 @@ public:
 	bool operator==(const Coord& rhs) const {
 		return x == rhs.x && y == rhs.y;
 	}
+	bool operator!=(const Coord& rhs) const {
+		return x != rhs.x || y != rhs.y;
+	}
 
 };
 
@@ -19,9 +22,10 @@ public:
 	Coord from;
 	Coord to;
 
-	Piece* piece_taken;
+	Coord piece_taken;
+	bool is_piece_taken{ false };
 
-	int promotion_to{};
+	int promotion_to {};
 	bool is_castle;
 
 	bool causes_check{ false };

@@ -15,7 +15,7 @@ class Piece
 {
 public:
 	Piece(const int piece_type_param, const int owner_param, Coord& coord_param);
-	~Piece();
+	virtual ~Piece() {};
 
 	//board_cell.piece->add_moves(*this, player_move_multiplier, check_for_pin);
 	virtual void add_moves(Board& board, int player_move_multiplier, bool check_for_pin, BoardCell& board_cell){}

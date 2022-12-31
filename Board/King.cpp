@@ -16,7 +16,12 @@ void King::add_moves(Board& board, int player_move_multiplier, bool check_for_pi
         if (check_cell->piece == nullptr || check_cell->piece != nullptr && check_cell->piece->owner != board_cell.piece->owner) {
             move_to.x = check_x;
             move_to.y = check_y;
-            board.add_move(move_to, piece_c, player_move_multiplier, check_for_pin);
+            if (check_cell->piece != nullptr) {
+                board.add_move(move_to, piece_c, check_cell->coord, player_move_multiplier, true, check_for_pin);
+            }
+            else {
+                board.add_move(move_to, piece_c, check_cell->coord, player_move_multiplier, false, check_for_pin);
+            }
         }
     }
 
@@ -28,7 +33,12 @@ void King::add_moves(Board& board, int player_move_multiplier, bool check_for_pi
         if (check_cell->piece == nullptr || check_cell->piece != nullptr && check_cell->piece->owner != board_cell.piece->owner) {
             move_to.x = check_x;
             move_to.y = check_y;
-            board.add_move(move_to, piece_c, player_move_multiplier, check_for_pin);
+            if (check_cell->piece != nullptr) {
+                board.add_move(move_to, piece_c, check_cell->coord, player_move_multiplier, true, check_for_pin);
+            }
+            else {
+                board.add_move(move_to, piece_c, check_cell->coord, player_move_multiplier, false, check_for_pin);
+            }
         }
     }
 
@@ -40,7 +50,12 @@ void King::add_moves(Board& board, int player_move_multiplier, bool check_for_pi
         if (check_cell->piece == nullptr || check_cell->piece != nullptr && check_cell->piece->owner != board_cell.piece->owner) {
             move_to.x = check_x;
             move_to.y = check_y;
-            board.add_move(move_to, piece_c, player_move_multiplier, check_for_pin);
+            if (check_cell->piece != nullptr) {
+                board.add_move(move_to, piece_c, check_cell->coord, player_move_multiplier, true, check_for_pin);
+            }
+            else {
+                board.add_move(move_to, piece_c, check_cell->coord, player_move_multiplier, false, check_for_pin);
+            }
         }
     }
 
@@ -52,7 +67,12 @@ void King::add_moves(Board& board, int player_move_multiplier, bool check_for_pi
         if (check_cell->piece == nullptr || check_cell->piece != nullptr && check_cell->piece->owner != board_cell.piece->owner) {
             move_to.x = check_x;
             move_to.y = check_y;
-            board.add_move(move_to, piece_c, player_move_multiplier, check_for_pin);
+            if (check_cell->piece != nullptr) {
+                board.add_move(move_to, piece_c, check_cell->coord, player_move_multiplier, true, check_for_pin);
+            }
+            else {
+                board.add_move(move_to, piece_c, check_cell->coord, player_move_multiplier, false, check_for_pin);
+            }
         }
     }
 
@@ -64,7 +84,12 @@ void King::add_moves(Board& board, int player_move_multiplier, bool check_for_pi
         if (check_cell->piece == nullptr || check_cell->piece != nullptr && check_cell->piece->owner != board_cell.piece->owner) {
             move_to.x = check_x;
             move_to.y = check_y;
-            board.add_move(move_to, piece_c, player_move_multiplier, check_for_pin);
+            if (check_cell->piece != nullptr) {
+                board.add_move(move_to, piece_c, check_cell->coord, player_move_multiplier, true, check_for_pin);
+            }
+            else {
+                board.add_move(move_to, piece_c, check_cell->coord, player_move_multiplier, false, check_for_pin);
+            }
         }
     }
 
@@ -76,7 +101,12 @@ void King::add_moves(Board& board, int player_move_multiplier, bool check_for_pi
         if (check_cell->piece == nullptr || check_cell->piece != nullptr && check_cell->piece->owner != board_cell.piece->owner) {
             move_to.x = check_x;
             move_to.y = check_y;
-            board.add_move(move_to, piece_c, player_move_multiplier, check_for_pin);
+            if (check_cell->piece != nullptr) {
+                board.add_move(move_to, piece_c, check_cell->coord, player_move_multiplier, true, check_for_pin);
+            }
+            else {
+                board.add_move(move_to, piece_c, check_cell->coord, player_move_multiplier, false, check_for_pin);
+            }
         }
     }
 
@@ -88,7 +118,12 @@ void King::add_moves(Board& board, int player_move_multiplier, bool check_for_pi
         if (check_cell->piece == nullptr || check_cell->piece != nullptr && check_cell->piece->owner != board_cell.piece->owner) {
             move_to.x = check_x;
             move_to.y = check_y;
-            board.add_move(move_to, piece_c, player_move_multiplier, check_for_pin);
+            if (check_cell->piece != nullptr) {
+                board.add_move(move_to, piece_c, check_cell->coord, player_move_multiplier, true, check_for_pin);
+            }
+            else {
+                board.add_move(move_to, piece_c, check_cell->coord, player_move_multiplier, false, check_for_pin);
+            }
         }
     }
 
@@ -100,17 +135,21 @@ void King::add_moves(Board& board, int player_move_multiplier, bool check_for_pi
         if (check_cell->piece == nullptr || check_cell->piece != nullptr && check_cell->piece->owner != board_cell.piece->owner) {
             move_to.x = check_x;
             move_to.y = check_y;
-            board.add_move(move_to, piece_c, player_move_multiplier, check_for_pin);
+            if (check_cell->piece != nullptr) {
+                board.add_move(move_to, piece_c, check_cell->coord, player_move_multiplier, true, check_for_pin);
+            }
+            else {
+                board.add_move(move_to, piece_c, check_cell->coord, player_move_multiplier, false, check_for_pin);
+            }
         }
-
     }
     ++board.move_number;
-    if (check_for_pin and board.in_check()) {
+    if (check_for_pin and !board.in_check()) {
         --board.move_number;
         // for castling
         bool king_moved{ false };
         for (auto& past_move : board.past_moves) {
-            if (past_move.from == board.board[4][(board.move_number % 2) * 7].coord) {
+            if (past_move.from == board.board[4][piece_c.y].coord) {
                 king_moved = true;
             }
         }
@@ -121,7 +160,7 @@ void King::add_moves(Board& board, int player_move_multiplier, bool check_for_pi
             // checks for short castle
             bool short_r_moved{ false };
             for (auto& past_move : board.past_moves) {
-                if (past_move.from == board.board[7][(board.move_number % 2) * 7].coord) {
+                if (past_move.from == board.board[7][piece_c.y].coord) {
                     short_r_moved = true;
                 }
             }
@@ -129,7 +168,7 @@ void King::add_moves(Board& board, int player_move_multiplier, bool check_for_pi
             // checks for long castle
             bool long_r_moved{ false };
             for (auto& past_move : board.past_moves) {
-                if (past_move.from == board.board[0][(board.move_number % 2) * 7].coord) {
+                if (past_move.from == board.board[0][piece_c.y].coord) {
                     long_r_moved = true;
                 }
             }
@@ -142,7 +181,7 @@ void King::add_moves(Board& board, int player_move_multiplier, bool check_for_pi
                 if (check_cell->piece == nullptr) {
                     move_to.x = piece_c.x + 1;
                     Move possible_move{ piece_c, move_to };
-                    if (!board.is_move_legal(possible_move)) {
+                    if (!board.is_move_legal(possible_move).is_legal) {
                         can_castle = false;
                     }
                 } else{ can_castle = false; }
@@ -151,14 +190,15 @@ void King::add_moves(Board& board, int player_move_multiplier, bool check_for_pi
                 if (check_cell->piece == nullptr) {
                     move_to.x = piece_c.x + 2;
                     Move possible_move{ piece_c, move_to };
-                    if (!board.is_move_legal(possible_move)) {
+                    if (!board.is_move_legal(possible_move).is_legal) {
                         can_castle = false;
                     }
                 } else{ can_castle = false; }
 
                 if (can_castle) {
                     Coord move_to{ piece_c.x + 2, piece_c.y };
-                    board.add_move(move_to, piece_c, player_move_multiplier, true, 0, true);
+
+                    board.add_move(move_to, piece_c, check_cell->coord, player_move_multiplier, false, check_for_pin, 0, true);
                 }
             }
 
@@ -170,7 +210,7 @@ void King::add_moves(Board& board, int player_move_multiplier, bool check_for_pi
                 if (check_cell->piece == nullptr) {
                     move_to.x = piece_c.x - 1;
                     Move possible_move{ piece_c, move_to };
-                    if (!board.is_move_legal(possible_move)) {
+                    if (!board.is_move_legal(possible_move).is_legal) {
                         can_castle = false;
                     }
                 } else{ can_castle = false; }
@@ -179,7 +219,7 @@ void King::add_moves(Board& board, int player_move_multiplier, bool check_for_pi
                 if (check_cell->piece == nullptr) {
                     move_to.x = piece_c.x - 2;
                     Move possible_move{ piece_c, move_to };
-                    if (!board.is_move_legal(possible_move)) {
+                    if (!board.is_move_legal(possible_move).is_legal) {
                         can_castle = false;
                     }
                 } else{ can_castle = false; }
@@ -188,8 +228,8 @@ void King::add_moves(Board& board, int player_move_multiplier, bool check_for_pi
                 if (check_cell->piece != nullptr) { can_castle = false; }
 
                 if (can_castle) {
-                    Coord move_to{ piece_c.x - 2, piece_c.y };
-                    board.add_move(move_to, piece_c, player_move_multiplier, true, 0, true);
+                    move_to.x = piece_c.x - 2;
+                    board.add_move(move_to, piece_c, check_cell->coord, player_move_multiplier, false, check_for_pin, 0, true);
                 }
             }
 

@@ -5,6 +5,7 @@ void Bishop::add_moves(Board &board, int player_move_multiplier, bool check_for_
     Coord piece_c = this->piece_coord;
     int check_x{};
     int check_y{};
+    Coord move_to{};
     BoardCell *check_cell{nullptr};
 
     // checks to the top right of the bishop for possible moves
@@ -17,9 +18,15 @@ void Bishop::add_moves(Board &board, int player_move_multiplier, bool check_for_
             check_cell = &board.board[check_x][check_y];
             if (check_cell->piece == nullptr || check_cell->piece != nullptr && check_cell->piece->owner != board_cell.piece->owner)
             {
-                Coord move_to{check_x, check_y};
-                board.add_move(move_to, piece_c, player_move_multiplier, check_for_pin);
-                if (check_cell->piece != nullptr){ break;}
+                move_to.x = check_x;
+                move_to.y = check_y;
+                if (check_cell->piece != nullptr) {
+                    board.add_move(move_to, piece_c, check_cell->coord, player_move_multiplier, true, check_for_pin);
+                    break;
+                }
+                else {
+                    board.add_move(move_to, piece_c, check_cell->coord, player_move_multiplier, false, check_for_pin);
+                }
             } else { break; }
         } else { break; }
     }
@@ -34,9 +41,15 @@ void Bishop::add_moves(Board &board, int player_move_multiplier, bool check_for_
             check_cell = &board.board[check_x][check_y];
             if (check_cell->piece == nullptr || check_cell->piece != nullptr && check_cell->piece->owner != board_cell.piece->owner)
             {
-                Coord move_to{check_x, check_y};
-                board.add_move(move_to, piece_c, player_move_multiplier, check_for_pin);
-                if (check_cell->piece != nullptr) { break; }
+                move_to.x = check_x;
+                move_to.y = check_y;
+                if (check_cell->piece != nullptr) {
+                    board.add_move(move_to, piece_c, check_cell->coord, player_move_multiplier, true, check_for_pin);
+                    break;
+                }
+                else {
+                    board.add_move(move_to, piece_c, check_cell->coord, player_move_multiplier, false, check_for_pin);
+                }
             }
             else { break; }
         }
@@ -53,9 +66,15 @@ void Bishop::add_moves(Board &board, int player_move_multiplier, bool check_for_
             check_cell = &board.board[check_x][check_y];
             if (check_cell->piece == nullptr || check_cell->piece != nullptr && check_cell->piece->owner != board_cell.piece->owner)
             {
-                Coord move_to{check_x, check_y};
-                board.add_move(move_to, piece_c, player_move_multiplier, check_for_pin);
-                if (check_cell->piece != nullptr) { break; }
+                move_to.x = check_x;
+                move_to.y = check_y;
+                if (check_cell->piece != nullptr) {
+                    board.add_move(move_to, piece_c, check_cell->coord, player_move_multiplier, true, check_for_pin);
+                    break;
+                }
+                else {
+                    board.add_move(move_to, piece_c, check_cell->coord, player_move_multiplier, false, check_for_pin);
+                }
             }
             else { break; }
         }
@@ -72,9 +91,15 @@ void Bishop::add_moves(Board &board, int player_move_multiplier, bool check_for_
             check_cell = &board.board[check_x][check_y];
             if (check_cell->piece == nullptr || check_cell->piece != nullptr && check_cell->piece->owner != board_cell.piece->owner)
             {
-                Coord move_to{check_x, check_y};
-                board.add_move(move_to, piece_c, player_move_multiplier, check_for_pin);
-                if (check_cell->piece != nullptr) { break; }
+                move_to.x = check_x;
+                move_to.y = check_y;
+                if (check_cell->piece != nullptr) {
+                    board.add_move(move_to, piece_c, check_cell->coord, player_move_multiplier, true, check_for_pin);
+                    break;
+                }
+                else {
+                    board.add_move(move_to, piece_c, check_cell->coord, player_move_multiplier, false, check_for_pin);
+                }
             }
             else { break; }
         }

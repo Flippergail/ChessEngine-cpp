@@ -100,7 +100,7 @@ int main() {
 
 
         if (playerColour == "r") {
-            srand(time(0));
+            //srand(time(0));
             int randomint = rand() % 3;
             if (randomint == 2) {
                 playerColour = "w"; cout << "You are playing as White." << endl;

@@ -5,6 +5,7 @@ void Queen::add_moves(Board& board, int player_move_multiplier, bool check_for_p
     Coord piece_c = this->piece_coord;
     int check_x = piece_c.x;
     int check_y = piece_c.y + player_move_multiplier;
+    Coord move_to{};
     BoardCell* check_cell{ nullptr };
 
     // checks to the top of the queen for possible moves
@@ -15,9 +16,15 @@ void Queen::add_moves(Board& board, int player_move_multiplier, bool check_for_p
         if (check_x > -1 && check_x < board_size && check_y > -1 && check_y < board_size) {
             check_cell = &board.board[check_x][check_y];
             if (check_cell->piece == nullptr || ( check_cell->piece != nullptr && check_cell->piece->owner != board_cell.piece->owner ) ) {
-                Coord move_to{ check_x, check_y };
-                board.add_move(move_to, piece_c, player_move_multiplier, check_for_pin);
-                if (check_cell->piece != nullptr) { break; }
+                move_to.x = check_x;
+                move_to.y = check_y;
+                if (check_cell->piece != nullptr) {
+                    board.add_move(move_to, piece_c, check_cell->coord, player_move_multiplier, true, check_for_pin);
+                    break;
+                }
+                else {
+                    board.add_move(move_to, piece_c, check_cell->coord, player_move_multiplier, false, check_for_pin);
+                }
             }
             else { break; }
         }
@@ -32,9 +39,15 @@ void Queen::add_moves(Board& board, int player_move_multiplier, bool check_for_p
         if (check_x > -1 && check_x < board_size && check_y > -1 && check_y < board_size) {
             check_cell = &board.board[check_x][check_y];
             if (check_cell->piece == nullptr || check_cell->piece != nullptr && check_cell->piece->owner != board_cell.piece->owner) {
-                Coord move_to{ check_x, check_y };
-                board.add_move(move_to, piece_c, player_move_multiplier, check_for_pin);
-                if (check_cell->piece != nullptr) { break; }
+                move_to.x = check_x;
+                move_to.y = check_y;
+                if (check_cell->piece != nullptr) {
+                    board.add_move(move_to, piece_c, check_cell->coord, player_move_multiplier, true, check_for_pin);
+                    break;
+                }
+                else {
+                    board.add_move(move_to, piece_c, check_cell->coord, player_move_multiplier, false, check_for_pin);
+                }
             }
             else { break; }
         }
@@ -49,9 +62,15 @@ void Queen::add_moves(Board& board, int player_move_multiplier, bool check_for_p
         if (check_x > -1 && check_x < board_size && check_y > -1 && check_y < board_size) {
             check_cell = &board.board[check_x][check_y];
             if (check_cell->piece == nullptr || check_cell->piece != nullptr && check_cell->piece->owner != board_cell.piece->owner) {
-                Coord move_to{ check_x, check_y };
-                board.add_move(move_to, piece_c, player_move_multiplier, check_for_pin);
-                if (check_cell->piece != nullptr) { break; }
+                move_to.x = check_x;
+                move_to.y = check_y;
+                if (check_cell->piece != nullptr) {
+                    board.add_move(move_to, piece_c, check_cell->coord, player_move_multiplier, true, check_for_pin);
+                    break;
+                }
+                else {
+                    board.add_move(move_to, piece_c, check_cell->coord, player_move_multiplier, false, check_for_pin);
+                }
             }
             else { break; }
         }
@@ -66,9 +85,15 @@ void Queen::add_moves(Board& board, int player_move_multiplier, bool check_for_p
         if (check_x > -1 && check_x < board_size && check_y > -1 && check_y < board_size) {
             check_cell = &board.board[check_x][check_y];
             if (check_cell->piece == nullptr || check_cell->piece != nullptr && check_cell->piece->owner != board_cell.piece->owner) {
-                Coord move_to{ check_x, check_y };
-                board.add_move(move_to, piece_c, player_move_multiplier, check_for_pin);
-                if (check_cell->piece != nullptr) { break; }
+                move_to.x = check_x;
+                move_to.y = check_y;;
+                if (check_cell->piece != nullptr) {
+                    board.add_move(move_to, piece_c, check_cell->coord, player_move_multiplier, true, check_for_pin);
+                    break;
+                }
+                else {
+                    board.add_move(move_to, piece_c, check_cell->coord, player_move_multiplier, false, check_for_pin);
+                }
             }
             else { break; }
         }
@@ -83,9 +108,15 @@ void Queen::add_moves(Board& board, int player_move_multiplier, bool check_for_p
         if (check_x > -1 && check_x < board_size && check_y > -1 && check_y < board_size) {
             check_cell = &board.board[check_x][check_y];
             if (check_cell->piece == nullptr || check_cell->piece != nullptr && check_cell->piece->owner != board_cell.piece->owner) {
-                Coord move_to{ check_x, check_y };
-                board.add_move(move_to, piece_c, player_move_multiplier, check_for_pin);
-                if (check_cell->piece != nullptr) { break; }
+                move_to.x = check_x;
+                move_to.y = check_y;
+                if (check_cell->piece != nullptr) {
+                    board.add_move(move_to, piece_c, check_cell->coord, player_move_multiplier, true, check_for_pin);
+                    break;
+                }
+                else {
+                    board.add_move(move_to, piece_c, check_cell->coord, player_move_multiplier, false, check_for_pin);
+                }
             }
             else { break; }
         }
@@ -100,9 +131,15 @@ void Queen::add_moves(Board& board, int player_move_multiplier, bool check_for_p
         if (check_x > -1 && check_x < board_size && check_y > -1 && check_y < board_size) {
             check_cell = &board.board[check_x][check_y];
             if (check_cell->piece == nullptr || check_cell->piece != nullptr && check_cell->piece->owner != board_cell.piece->owner) {
-                Coord move_to{ check_x, check_y };
-                board.add_move(move_to, piece_c, player_move_multiplier, check_for_pin);
-                if (check_cell->piece != nullptr) { break; }
+                move_to.x = check_x;
+                move_to.y = check_y;
+                if (check_cell->piece != nullptr) {
+                    board.add_move(move_to, piece_c, check_cell->coord, player_move_multiplier, true, check_for_pin);
+                    break;
+                }
+                else {
+                    board.add_move(move_to, piece_c, check_cell->coord, player_move_multiplier, false, check_for_pin);
+                }
             }
             else { break; }
         }
@@ -117,9 +154,15 @@ void Queen::add_moves(Board& board, int player_move_multiplier, bool check_for_p
         if (check_x > -1 && check_x < board_size && check_y > -1 && check_y < board_size) {
             check_cell = &board.board[check_x][check_y];
             if (check_cell->piece == nullptr || check_cell->piece != nullptr && check_cell->piece->owner != board_cell.piece->owner) {
-                Coord move_to{ check_x, check_y };
-                board.add_move(move_to, piece_c, player_move_multiplier, check_for_pin);
-                if (check_cell->piece != nullptr) { break; }
+                move_to.x = check_x;
+                move_to.y = check_y;
+                if (check_cell->piece != nullptr) {
+                    board.add_move(move_to, piece_c, check_cell->coord, player_move_multiplier, true, check_for_pin);
+                    break;
+                }
+                else {
+                    board.add_move(move_to, piece_c, check_cell->coord, player_move_multiplier, false, check_for_pin);
+                }
             }
             else { break; }
         }
@@ -134,9 +177,15 @@ void Queen::add_moves(Board& board, int player_move_multiplier, bool check_for_p
         if (check_x > -1 && check_x < board_size && check_y > -1 && check_y < board_size) {
             check_cell = &board.board[check_x][check_y];
             if (check_cell->piece == nullptr || check_cell->piece != nullptr && check_cell->piece->owner != board_cell.piece->owner) {
-                Coord move_to{ check_x, check_y };
-                board.add_move(move_to, piece_c, player_move_multiplier, check_for_pin);
-                if (check_cell->piece != nullptr) { break; }
+                move_to.x = check_x;
+                move_to.y = check_y;
+                if (check_cell->piece != nullptr) {
+                    board.add_move(move_to, piece_c, check_cell->coord, player_move_multiplier, true, check_for_pin);
+                    break;
+                }
+                else {
+                    board.add_move(move_to, piece_c, check_cell->coord, player_move_multiplier, false, check_for_pin);
+                }
             }
             else { break; }
         }
