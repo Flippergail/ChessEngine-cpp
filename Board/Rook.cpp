@@ -20,11 +20,11 @@ void Rook::add_moves(Board& board, int player_move_multiplier, bool check_for_pi
                 move_to.x = check_x;
                 move_to.y = check_y;
                 if (check_cell->piece != nullptr) {
-                    board.add_move(move_to, piece_c, check_cell->coord, player_move_multiplier, true, check_for_pin);
+                    board.add_move(move_to, piece_c, move_to, player_move_multiplier, true, check_for_pin);
                     break;
                 }
                 else {
-                    board.add_move(move_to, piece_c, check_cell->coord, player_move_multiplier, false, check_for_pin);
+                    board.add_move(move_to, piece_c, move_to, player_move_multiplier, false, check_for_pin);
                 }
             }
             else { break; }
@@ -43,11 +43,11 @@ void Rook::add_moves(Board& board, int player_move_multiplier, bool check_for_pi
                 move_to.x = check_x;
                 move_to.y = check_y;
                 if (check_cell->piece != nullptr) {
-                    board.add_move(move_to, piece_c, check_cell->coord, player_move_multiplier, true, check_for_pin);
+                    board.add_move(move_to, piece_c, move_to, player_move_multiplier, true, check_for_pin);
                     break;
                 }
                 else {
-                    board.add_move(move_to, piece_c, check_cell->coord, player_move_multiplier, false, check_for_pin);
+                    board.add_move(move_to, piece_c, move_to, player_move_multiplier, false, check_for_pin);
                 }
             }
             else { break; }
@@ -66,11 +66,11 @@ void Rook::add_moves(Board& board, int player_move_multiplier, bool check_for_pi
                 move_to.x = check_x;
                 move_to.y = check_y;
                 if (check_cell->piece != nullptr) {
-                    board.add_move(move_to, piece_c, check_cell->coord, player_move_multiplier, true, check_for_pin);
+                    board.add_move(move_to, piece_c, move_to, player_move_multiplier, true, check_for_pin);
                     break;
                 }
                 else {
-                    board.add_move(move_to, piece_c, check_cell->coord, player_move_multiplier, false, check_for_pin);
+                    board.add_move(move_to, piece_c, move_to, player_move_multiplier, false, check_for_pin);
                 }
             }
             else { break; }
@@ -89,11 +89,11 @@ void Rook::add_moves(Board& board, int player_move_multiplier, bool check_for_pi
                 move_to.x = check_x;
                 move_to.y = check_y;
                 if (check_cell->piece != nullptr) {
-                    board.add_move(move_to, piece_c, check_cell->coord, player_move_multiplier, true, check_for_pin);
+                    board.add_move(move_to, piece_c, move_to, player_move_multiplier, true, check_for_pin);
                     break;
                 }
                 else {
-                    board.add_move(move_to, piece_c, check_cell->coord, player_move_multiplier, false, check_for_pin);
+                    board.add_move(move_to, piece_c, move_to, player_move_multiplier, false, check_for_pin);
                 }
             }
             else { break; }

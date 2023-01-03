@@ -102,6 +102,11 @@ void Board::pop_move(bool check_moves /* = true*/)
         this->new_piece(*board_cell, last_move.promoted_from, last_move.piece_owner);
     }
 
+     if (board_cell->piece == nullptr) {
+         std::cout << "nullptr!!!" << std::endl;
+         std::cout << *this << std::endl;
+    }
+
     board_cell->piece->piece_coord = last_move.from;
     board[last_move.from.x][last_move.from.y].piece = board_cell->piece;
     board[last_move.to.x][last_move.to.y].piece = nullptr;
@@ -149,7 +154,6 @@ void Board::pop_move(bool check_moves /* = true*/)
 
 bool Board::push_move(Move &player_move, bool check_for_pin /* = true */)
 {
-
     if (game_state != playing_state)
     {
         return false;
@@ -271,8 +275,11 @@ bool Board::in_check()
     return is_check;
 }
 
-void Board::add_move(Coord &move_to, Coord &piece_c, Coord piece_taken, int player_move_multiplier, bool is_taking_piece, bool check_for_pin /* = false*/, int promotion_to /* = 0*/, bool is_castle /* = false*/)
+void Board::add_move(Coord move_to, Coord piece_c, Coord piece_taken, int player_move_multiplier, bool is_taking_piece, bool check_for_pin /* = false*/, int promotion_to /* = 0*/, bool is_castle /* = false*/)
 {
+    //if (move_to.x == 3 && move_to.y == 0) {
+    //    std::cout << "passed " << move_to.x << move_to.y << std::endl;
+    //}
     Move possible_move{piece_c, move_to, piece_taken, is_taking_piece, promotion_to, is_castle};
 
     if (check_for_pin)
@@ -337,10 +344,6 @@ void Board::find_moves(bool check_for_pin /* = true*/)
         player_move_multiplier = -1;
     }
 
-
-    int check_x{};
-    int check_y{};
-
     for (int y = 0; y < board_size; ++y)
     {
         for (int x = 0; x < board_size; x++)
@@ -349,7 +352,6 @@ void Board::find_moves(bool check_for_pin /* = true*/)
             BoardCell board_cell = board[x][y];
             if (board_cell.piece != nullptr && board_cell.piece->owner == move_number % 2)
             {
-                Coord &piece_c = board_cell.coord;
                 board_cell.piece->add_moves(*this, player_move_multiplier, check_for_pin, board_cell);
             }
         }

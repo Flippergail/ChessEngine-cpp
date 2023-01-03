@@ -26,9 +26,6 @@ private:
 	// quiescence search delta pruning
 	int BIG_DELTA = 975;
 
-	int pushes{};
-	int pops{};
-
 	int negamax(Board& board, int alpha, int beta, int treeDepthLeft);
 	int quiescence(Board& board, int alpha, int beta, int treeDepthLeft);
 

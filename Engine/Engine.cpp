@@ -14,7 +14,6 @@ void Engine::make_move(Board& board) {
 	std::vector<Move> possible_moves = board.possible_moves;
 
 	PastMove last_move{};
-	PastMove move_before_last{};
 	if (board.move_number > 1) {
 		last_move = board.past_moves.end()[-2];
 	}

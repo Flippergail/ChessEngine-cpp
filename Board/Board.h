@@ -41,7 +41,7 @@ public:
     void pop_move(bool check_moves = true);
     bool push_move(Move& player_move, bool check_for_pin = true);
 
-    void add_move(Coord& move_to, Coord& piece_c, Coord piece_taken, int player_move_multiplier, bool is_taking_piece, bool check_for_pin = false, int promotion_to = 0, bool is_castle = false);
+    void add_move(Coord move_to, Coord piece_c, Coord piece_taken, int player_move_multiplier, bool is_taking_piece, bool check_for_pin = false, int promotion_to = 0, bool is_castle = false);
     void find_moves(bool check_for_pin = true);
 
     Legal_And_Check_Struct is_move_legal(Move& check_move);
