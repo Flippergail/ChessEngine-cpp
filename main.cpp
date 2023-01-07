@@ -90,12 +90,13 @@ int main() {
     cout << "Would you like to play the engine or watch a game of the engine vs engine (type 1 or 2) : ";
     getline(cin, matchFormat);
 
+    Board* board = new Board;
+
     if (matchFormat == "1") {
         string playerColour;
         cout << "Would you like to play white, black or random? w/b/r : ";
         getline(cin, playerColour);
 
-        Board* board = new Board;
         Engine* engine = new Engine;
 
 
@@ -135,8 +136,7 @@ int main() {
             }
         }
     }
-    else {
-        Board* board = new Board;
+    else if (matchFormat == "2") {
 
         Engine* engine_white = new Engine;
         engine_white->engineColour = 0;
@@ -154,6 +154,14 @@ int main() {
             engine_black->make_move(*board);
             cout << *board << endl;
 
+            game_playing = check_game_state(board);
+        }
+    }
+    else if (matchFormat == "3") {
+
+        bool game_playing{ true };
+        while (game_playing) {
+            player_push_move(board);
             game_playing = check_game_state(board);
         }
     }

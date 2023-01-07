@@ -20,7 +20,7 @@ private:
 	int total_branches{};
 
 	const int treeDepth{ 4 };
-	const int quiescenceDepth{ 10 };
+	const int quiescenceDepth{ 6 };
 	bool move_repeating{ false };
 
 	// quiescence search delta pruning

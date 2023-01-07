@@ -18,7 +18,6 @@ void Knight::add_moves(Board& board, int player_move_multiplier, bool check_for_
                 move_to.y = check_y;
                 if (board.board[check_x][check_y].piece != nullptr) {
                     board.add_move(move_to, piece_c, move_to, player_move_multiplier, true, check_for_pin);
-                    break;
                 }
                 else {
                     board.add_move(move_to, piece_c, move_to, player_move_multiplier, false, check_for_pin);

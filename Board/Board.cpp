@@ -97,14 +97,8 @@ void Board::pop_move(bool check_moves /* = true*/)
     // unpromotes the piece if it was promoted
      if (last_move.promoted_to != 0)
     {
-        //board_cell->piece->~Piece();
         delete board_cell->piece;
         this->new_piece(*board_cell, last_move.promoted_from, last_move.piece_owner);
-    }
-
-     if (board_cell->piece == nullptr) {
-         std::cout << "nullptr!!!" << std::endl;
-         std::cout << *this << std::endl;
     }
 
     board_cell->piece->piece_coord = last_move.from;
@@ -184,7 +178,6 @@ bool Board::push_move(Move &player_move, bool check_for_pin /* = true */)
         past_move.piece_taken_owner = board[game_move.piece_taken.x][game_move.piece_taken.y].piece->owner;
 
         delete board[game_move.piece_taken.x][game_move.piece_taken.y].piece;
-        // board[game_move.piece_taken->piece_coord.x][game_move.piece_taken->piece_coord.y].piece->~Piece();
         board[game_move.piece_taken.x][game_move.piece_taken.y].piece = nullptr;
     }
 
@@ -196,7 +189,6 @@ bool Board::push_move(Move &player_move, bool check_for_pin /* = true */)
 
     if (player_move.promotion_to != 0)
     {
-        //board[game_move.to.x][game_move.to.y].piece->~Piece();
         delete board[game_move.to.x][game_move.to.y].piece;
         this->new_piece(board[game_move.to.x][game_move.to.y], player_move.promotion_to, move_number % 2);
     }
@@ -235,6 +227,7 @@ Legal_And_Check_Struct Board::is_move_legal(Move &check_move)
     Legal_And_Check_Struct legal_and_check{};
 
     // checks if there is a check after the piece has moved
+
     this->push_move(check_move, false);
     legal_and_check.is_legal = !this->in_check();
     ++move_number;
@@ -277,9 +270,6 @@ bool Board::in_check()
 
 void Board::add_move(Coord move_to, Coord piece_c, Coord piece_taken, int player_move_multiplier, bool is_taking_piece, bool check_for_pin /* = false*/, int promotion_to /* = 0*/, bool is_castle /* = false*/)
 {
-    //if (move_to.x == 3 && move_to.y == 0) {
-    //    std::cout << "passed " << move_to.x << move_to.y << std::endl;
-    //}
     Move possible_move{piece_c, move_to, piece_taken, is_taking_piece, promotion_to, is_castle};
 
     if (check_for_pin)
@@ -402,7 +392,7 @@ void Board::find_moves(bool check_for_pin /* = true*/)
         }
     }
 
-    //// checks for insufficient material scenarios
+    //// checks for insufficient material scenarios (
     //if (this->white_pieces.size() <= 3 || this->black_pieces.size() <= 3)
     //{
     //    if (this->are_only_pieces(0, 0) /* (k, k) */)
